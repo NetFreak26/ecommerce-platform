@@ -1,4 +1,4 @@
-package com.platform.ecommerce.dtos;
+package com.platform.ecommerce.payloads;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
-    private Long id;
+public class CategoryDTO {
+    private Long categoryId;
     @NotBlank
     private String categoryName;
 }
