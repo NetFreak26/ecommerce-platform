@@ -5,7 +5,7 @@ import com.platform.ecommerce.exceptions.ResourceNotFoundException;
 import com.platform.ecommerce.products.payloads.ProductDTO;
 import com.platform.ecommerce.products.payloads.ProductPageResponse;
 import com.platform.ecommerce.products.payloads.ProductResponse;
-import com.platform.ecommerce.products.services.IProductService;
+import com.platform.ecommerce.products.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     @Autowired
-    private IProductService productService;
+    private ProductService productService;
 
     @PostMapping("/add/category/{categoryId}")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO, @PathVariable Long categoryId) {

@@ -21,5 +21,8 @@ public class ProductImage {
     @JsonIgnore
     private Product product;
 
-    private String imageUrl;
+    @Lob
+    private byte[] data;
+
+    private String fileName;
 }
