@@ -1,7 +1,7 @@
-package com.platform.ecommerce.services;
+package com.platform.ecommerce.categories.services;
 
-import com.platform.ecommerce.payloads.CategoryDTO;
-import com.platform.ecommerce.payloads.CategoryPageResponse;
+import com.platform.ecommerce.categories.payloads.CategoryDTO;
+import com.platform.ecommerce.categories.payloads.CategoryPageResponse;
 
 public interface ICategoryService {
     CategoryDTO createProductCategory(CategoryDTO categoryDto);

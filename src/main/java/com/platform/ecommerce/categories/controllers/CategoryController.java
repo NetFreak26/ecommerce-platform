@@ -1,11 +1,11 @@
-package com.platform.ecommerce.controllers;
+package com.platform.ecommerce.categories.controllers;
 
 import com.platform.ecommerce.config.AppConstants;
-import com.platform.ecommerce.payloads.CategoryDTO;
-import com.platform.ecommerce.payloads.CategoryPageResponse;
+import com.platform.ecommerce.categories.payloads.CategoryDTO;
+import com.platform.ecommerce.categories.payloads.CategoryPageResponse;
 import com.platform.ecommerce.exceptions.DuplicationException;
 import com.platform.ecommerce.exceptions.ResourceNotFoundException;
-import com.platform.ecommerce.services.ICategoryService;
+import com.platform.ecommerce.categories.services.ICategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

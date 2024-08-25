@@ -1,11 +1,11 @@
-package com.platform.ecommerce.services;
+package com.platform.ecommerce.categories.services;
 
-import com.platform.ecommerce.payloads.CategoryDTO;
-import com.platform.ecommerce.payloads.CategoryPageResponse;
+import com.platform.ecommerce.categories.payloads.CategoryDTO;
+import com.platform.ecommerce.categories.payloads.CategoryPageResponse;
 import com.platform.ecommerce.exceptions.DuplicationException;
 import com.platform.ecommerce.exceptions.ResourceNotFoundException;
-import com.platform.ecommerce.models.Category;
-import com.platform.ecommerce.repositiories.CategoryRepository;
+import com.platform.ecommerce.categories.models.Category;
+import com.platform.ecommerce.categories.repositiories.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,7 +52,7 @@ public class CategoryService implements ICategoryService {
         categoryPageResponse.setPageNumber(page.getNumber());
         categoryPageResponse.setPageSize(page.getSize());
         categoryPageResponse.setTotalPages(page.getTotalPages());
-        categoryPageResponse.setTotalElement(page.getTotalElements());
+        categoryPageResponse.setTotalElements(page.getTotalElements());
         categoryPageResponse.setLastPage(page.isLast());
         return categoryPageResponse;
     }

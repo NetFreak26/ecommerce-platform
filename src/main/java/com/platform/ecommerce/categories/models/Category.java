@@ -1,4 +1,4 @@
-package com.platform.ecommerce.models;
+package com.platform.ecommerce.categories.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -16,8 +16,6 @@ public class Category {
     private Long categoryId;
 
     @NotBlank
-    @Size(min = 5, message = "Category name must contain at least 5 characters")
+    @Column(unique = true)
     private String categoryName;
-
-
 }
