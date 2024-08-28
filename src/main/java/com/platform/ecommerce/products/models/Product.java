@@ -2,6 +2,7 @@ package com.platform.ecommerce.products.models;
 
 import com.platform.ecommerce.categories.models.Category;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,15 +22,19 @@ public class Product {
 
     private String productName;
     private String description;
+    @Min(0)
     private Integer quantity;
+    @Min(0)
     private Double originalPrice;
+    @Min(0)
     private Double sellingPrice;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
     @JoinTable(
             name = "products_configurations",
             joinColumns = @JoinColumn(name = "product_id"),
