@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/carts")
+@RequestMapping("/api/cart")
 public class ShoppingCartController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class ShoppingCartController {
     @PostMapping("/add")
     public ResponseEntity<?> addSoppingCartItem(@Valid @RequestBody ShoppingCartItemDTO shoppingCartItemDTO) {
         try {
-            shoppingCartService.addSoppingCartItem(shoppingCartItemDTO);
+            shoppingCartService.addShoppingCartItem(shoppingCartItemDTO);
             return new ResponseEntity<>("Item added successfully", HttpStatus.OK);
         } catch (Exception e) {
             Map<String, Object> map = new HashMap<>();
@@ -33,7 +33,7 @@ public class ShoppingCartController {
         }
     }
 
-    @GetMapping("/user/cart")
+    @GetMapping
     public ResponseEntity<?> getUserShoppingCart() {
         try {
             ShoppingCartResponse shoppingCartResponse = shoppingCartService.getUserCart();

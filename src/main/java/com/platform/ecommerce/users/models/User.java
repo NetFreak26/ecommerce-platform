@@ -2,6 +2,7 @@ package com.platform.ecommerce.users.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.platform.ecommerce.cart.models.ShoppingCart;
+import com.platform.ecommerce.cart.models.Wishlist;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -54,4 +55,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
     @JsonIgnore
     private ShoppingCart shoppingCart;
+
+    @OneToOne(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
+    @JsonIgnore
+    private Wishlist wishlist;
 }

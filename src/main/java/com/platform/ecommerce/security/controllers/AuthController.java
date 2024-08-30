@@ -1,6 +1,7 @@
 package com.platform.ecommerce.security.controllers;
 
 import com.platform.ecommerce.cart.models.ShoppingCart;
+import com.platform.ecommerce.cart.models.Wishlist;
 import com.platform.ecommerce.exceptions.DuplicationException;
 import com.platform.ecommerce.exceptions.ResourceNotFoundException;
 import com.platform.ecommerce.security.jwt.JwtUtils;
@@ -128,7 +129,11 @@ public class AuthController {
             ShoppingCart shoppingCart = new ShoppingCart();
             shoppingCart.setUser(user);
 
+            Wishlist wishlist = new Wishlist();
+            wishlist.setUser(user);
+
             user.setShoppingCart(shoppingCart);
+            user.setWishlist(wishlist);
             userRepository.save(user);
 
             return new ResponseEntity<>("User Created Successfully", HttpStatus.CREATED);

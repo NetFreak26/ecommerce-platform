@@ -5,7 +5,7 @@ import com.platform.ecommerce.cart.payloads.ShoppingCartResponse;
 
 public interface ShoppingCartService {
 
-    void addSoppingCartItem(ShoppingCartItemDTO shoppingCartItemDTO);
+    void addShoppingCartItem(ShoppingCartItemDTO shoppingCartItemDTO);
 
     ShoppingCartResponse getUserCart();
 

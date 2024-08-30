@@ -3,6 +3,7 @@ package com.platform.ecommerce.cart.services;
 import com.platform.ecommerce.cart.models.ShoppingCart;
 import com.platform.ecommerce.cart.models.ShoppingCartItem;
 import com.platform.ecommerce.cart.payloads.ShoppingCartItemDTO;
+import com.platform.ecommerce.cart.payloads.ShoppingCartItemResponse;
 import com.platform.ecommerce.cart.payloads.ShoppingCartResponse;
 import com.platform.ecommerce.cart.repositories.ShoppingCartItemRepository;
 import com.platform.ecommerce.cart.repositories.ShoppingCartRepository;
@@ -18,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,7 +41,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
     @Override
-    public void addSoppingCartItem(ShoppingCartItemDTO shoppingCartItemDTO) {
+    public void addShoppingCartItem(ShoppingCartItemDTO shoppingCartItemDTO) {
         User user = authUtils.loggedInUser();
         Product product = productRepository.findById(shoppingCartItemDTO.getProductId()).orElseThrow(
                 () -> new ResourceNotFoundException("Product not found with id: " + shoppingCartItemDTO.getProductId())
@@ -74,10 +76,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCartResponse getUserCart() {
         User user = authUtils.loggedInUser();
         ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user);
-        return modelMapper.map(shoppingCart, ShoppingCartResponse.class);
+        return mapShoppingCartToResponse(shoppingCart);
     }
 
-    @Transactional
     @Override
     public ShoppingCartResponse updateShoppingCartItem(Long itemId, Integer quantity) {
         User user = authUtils.loggedInUser();
@@ -104,7 +105,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
             shoppingCartItem.setQuantity(quantity);
             shoppingCartItemRepository.save(shoppingCartItem);
-            return modelMapper.map(shoppingCart, ShoppingCartResponse.class);
+            return mapShoppingCartToResponse(shoppingCart);
         }
     }
 
@@ -119,6 +120,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         shoppingCart.removeShoppingCartItem(shoppingCartItem);
         shoppingCartItemRepository.delete(shoppingCartItem);
-        return modelMapper.map(shoppingCart, ShoppingCartResponse.class);
+        return mapShoppingCartToResponse(shoppingCart);
+    }
+
+    private ShoppingCartResponse mapShoppingCartToResponse(ShoppingCart shoppingCart) {
+        List<ShoppingCartItemResponse> shoppingCartItemResponses = shoppingCart.getShoppingCartItems()
+                .stream()
+                .map(item -> modelMapper.map(item, ShoppingCartItemResponse.class))
+                .toList();
+        return new ShoppingCartResponse(shoppingCartItemResponses);
     }
 }

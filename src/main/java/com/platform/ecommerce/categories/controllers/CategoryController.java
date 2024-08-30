@@ -5,7 +5,7 @@ import com.platform.ecommerce.categories.payloads.CategoryDTO;
 import com.platform.ecommerce.categories.payloads.CategoryPageResponse;
 import com.platform.ecommerce.exceptions.DuplicationException;
 import com.platform.ecommerce.exceptions.ResourceNotFoundException;
-import com.platform.ecommerce.categories.services.ICategoryService;
+import com.platform.ecommerce.categories.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
 
     @Autowired
-    private ICategoryService categoryService;
+    private CategoryService categoryService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createProductCategory(@Valid @RequestBody CategoryDTO categoryDto) {
