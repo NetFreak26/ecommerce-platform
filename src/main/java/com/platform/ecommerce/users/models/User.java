@@ -1,5 +1,7 @@
 package com.platform.ecommerce.users.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.platform.ecommerce.cart.models.ShoppingCart;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -48,4 +50,8 @@ public class User {
             orphanRemoval = true
     )
     private List<Address> addresses = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
+    @JsonIgnore
+    private ShoppingCart shoppingCart;
 }

@@ -1,5 +1,6 @@
 package com.platform.ecommerce.security.controllers;
 
+import com.platform.ecommerce.cart.models.ShoppingCart;
 import com.platform.ecommerce.exceptions.DuplicationException;
 import com.platform.ecommerce.exceptions.ResourceNotFoundException;
 import com.platform.ecommerce.security.jwt.JwtUtils;
@@ -12,6 +13,7 @@ import com.platform.ecommerce.users.models.Role;
 import com.platform.ecommerce.users.models.User;
 import com.platform.ecommerce.users.repositories.RoleRepository;
 import com.platform.ecommerce.users.repositories.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +56,8 @@ public class AuthController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
+    @PostMapping("/signin")
+    public ResponseEntity<?> signin(@Valid @RequestBody LoginRequest loginRequest) {
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     loginRequest.getUsername(),
@@ -122,6 +124,11 @@ public class AuthController {
                     }
                 });
             }
+
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setUser(user);
+
+            user.setShoppingCart(shoppingCart);
             userRepository.save(user);
 
             return new ResponseEntity<>("User Created Successfully", HttpStatus.CREATED);
@@ -136,5 +143,13 @@ public class AuthController {
             map.put("status", false);
             return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/signout")
+    public ResponseEntity<?> signout(){
+        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
+                        cookie.toString())
+                .body("You've been signed out!");
     }
 }
