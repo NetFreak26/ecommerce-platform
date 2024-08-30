@@ -1,28 +1,19 @@
-package com.platform.ecommerce.users.models;
+package com.platform.ecommerce.users.payloads;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "addresses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AddressDTO {
     private Long addressId;
 
     @NotBlank
-    @Column(name = "address_line1")
     private String addressLine1;
 
-    @Column(name = "address_line2")
     private String addressLine2;
 
     @NotBlank
@@ -36,9 +27,4 @@ public class Address {
 
     @NotBlank
     private String country;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
 }

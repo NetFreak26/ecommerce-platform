@@ -3,9 +3,7 @@ package com.platform.ecommerce.products.models;
 import com.platform.ecommerce.categories.models.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +40,23 @@ public class Product {
     )
     private List<ProductConfiguration> productConfigurations = new ArrayList<>();
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductImage> productImages = new ArrayList<>();
 
     public void setProductConfigurations(List<ProductConfiguration> productConfigurations) {
         this.productConfigurations.clear();
         this.productConfigurations.addAll(productConfigurations);
+    }
+
+    public synchronized void addProductImage(ProductImage productImage) {
+        if (this.productImages.contains(productImage)) {
+            return;
+        }
+        this.productImages.add(productImage);
+    }
+
+    public synchronized void removeProductImage(ProductImage productImage) {
+        this.productImages.remove(productImage);
     }
 }

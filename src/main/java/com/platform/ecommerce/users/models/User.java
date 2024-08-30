@@ -7,9 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +36,7 @@ public class User {
 
     private Boolean isEnabled;
 
+    @Setter(AccessLevel.NONE)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.EAGER
     )
@@ -46,17 +45,44 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "user",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true
     )
     private List<Address> addresses = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
+    @OneToOne(mappedBy = "user",
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE },
+            orphanRemoval = true)
     @JsonIgnore
     private ShoppingCart shoppingCart;
 
-    @OneToOne(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
+    @OneToOne(mappedBy = "user",
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE },
+            orphanRemoval = true)
     @JsonIgnore
     private Wishlist wishlist;
+
+    public synchronized void addRole(Role role) {
+        if (this.roles.contains(role)) {
+            return;
+        }
+        this.roles.add(role);
+    }
+
+    public synchronized void removeRole(Role role) {
+        this.roles.remove(role);
+    }
+
+    public synchronized void addAddress(Address address) {
+        if (this.addresses.contains(address)) {
+            return;
+        }
+        this.addresses.add(address);
+    }
+
+    public synchronized void removeAddress(Address address) {
+        this.addresses.remove(address);
+    }
 }

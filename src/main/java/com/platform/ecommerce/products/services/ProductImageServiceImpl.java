@@ -41,7 +41,7 @@ public class ProductImageServiceImpl implements ProductImageService {
             productImage.setData(file.getBytes());
             ProductImage savedProductImage = productImageRepository.save(productImage);
 
-            product.getProductImages().add(savedProductImage);
+            product.addProductImage(savedProductImage);
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file " + file.getOriginalFilename(), e);
         }

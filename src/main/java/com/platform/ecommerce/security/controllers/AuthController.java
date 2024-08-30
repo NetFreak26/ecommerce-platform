@@ -107,19 +107,19 @@ public class AuthController {
                         case "admin":
                             Role adminRole = roleRepository.findByAppRole(AppRole.ADMIN)
                                     .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
-                            user.getRoles().add(adminRole);
+                            user.addRole(adminRole);
 
                             break;
                         case "seller":
-                            Role modRole = roleRepository.findByAppRole(AppRole.SELLER)
+                            Role sellerRole = roleRepository.findByAppRole(AppRole.SELLER)
                                     .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
-                            user.getRoles().add(modRole);
+                            user.addRole(sellerRole);
 
                             break;
                         case "user":
                             Role userRole = roleRepository.findByAppRole(AppRole.USER)
                                     .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
-                            user.getRoles().add(userRole);
+                            user.addRole(userRole);
 
                             break;
                     }
