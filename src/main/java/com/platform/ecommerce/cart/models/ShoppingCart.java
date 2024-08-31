@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "shopping_carts")
@@ -31,5 +32,17 @@ public class ShoppingCart {
 
     public synchronized void removeShoppingCartItem(ShoppingCartItem shoppingCartItem) {
         this.shoppingCartItems.remove(shoppingCartItem);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ShoppingCart that)) return false;
+        return Objects.equals(shoppingCartId, that.shoppingCartId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(shoppingCartId);
     }
 }

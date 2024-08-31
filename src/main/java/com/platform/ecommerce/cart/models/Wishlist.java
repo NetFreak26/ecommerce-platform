@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "wishlists")
@@ -32,5 +33,17 @@ public class Wishlist {
 
     public synchronized void removeWishlistItem(WishlistItem wishlistItem) {
         this.wishlistItems.remove(wishlistItem);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Wishlist wishlist)) return false;
+        return Objects.equals(wishlistId, wishlist.wishlistId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(wishlistId);
     }
 }
