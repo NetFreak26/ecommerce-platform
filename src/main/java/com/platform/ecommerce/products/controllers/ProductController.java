@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @PreAuthorize("hasRole('SELLER')")
     @PostMapping("/add/category/{categoryId}")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO, @PathVariable Long categoryId) {
         try {
@@ -76,6 +78,7 @@ public class ProductController {
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @PutMapping("/update/{productId}")
     public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductDTO productDTO, @PathVariable Long productId) {
         try {
@@ -86,6 +89,7 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @DeleteMapping("/delete/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long productId) {
         try {
