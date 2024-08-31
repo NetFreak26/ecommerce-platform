@@ -11,4 +11,5 @@ public class EcommercePlatformApplication {
 		SpringApplication.run(EcommercePlatformApplication.class, args);
 	}
 
+
 }
